@@ -44,7 +44,7 @@ const Register = () => {
     if (findUser) {
       alert("this user already exist, login?");
       navigate("/signin", { replace: true });
-    } else {
+    } else if (validated) {
       dispatch(signup(newAccount));
       navigate("/signin", { replace: true });
     }
