@@ -6,22 +6,19 @@ import Register from "./components/auth/Register";
 import Home from "./components/Home";
 import Authentication from "./components/template/Authentication";
 import Admin from "./components/dashboard/Admin";
-import { useSelector } from "react-redux";
 import User from "./components/dashboard/User";
 
 function App() {
-  const isAdmin = useSelector((state) => state.user.admin);
-  const users = useSelector((state) => state.user);
   return (
     <div>
-      <Navigation isAdmin={isAdmin} />
+      <Navigation />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
           path="signup"
           element={
             <Authentication>
-              <Register users={users} />
+              <Register />
             </Authentication>
           }
         />
@@ -29,7 +26,7 @@ function App() {
           path="signin"
           element={
             <Authentication>
-              <Login users={users} />
+              <Login />
             </Authentication>
           }
         />

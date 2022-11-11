@@ -1,82 +1,79 @@
 import React, { useState } from "react";
-import { Form, Button, FloatingLabel } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { signin } from "../../JS/userReducer";
+import { Form, Button, Container, FloatingLabel, Col } from "react-bootstrap";
+import { emailRegEx } from "../constant/constants";
 
-const Login = ({ users }) => {
+const Login = () => {
   const [validated, setValidated] = useState(false);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [showOrHide, setShowOrHide] = useState(false);
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const onClickLogin = (e) => {
-    const form = e.currentTarget;
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
     if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
+      event.preventDefault();
+      event.stopPropagation();
     }
 
     setValidated(true);
-
-    const theAccount = users.filter((user) => user.email === email);
-
-    if (theAccount.length === 0) {
-      alert("No user with this email");
-      navigate("/signup", { replace: true });
-    }
-    if (theAccount[0].password === password) {
-      dispatch(signin({ email, password }));
-      navigate("/dashbord", { replace: true });
-    } else {
-      alert("Passwords do not match");
-      setValidated(false);
-      navigate("/signin", { replace: true });
-    }
   };
 
   return (
-    <Form autoComplete="no-fill" noValidate validated={validated}>
-      <FloatingLabel label="Email" className="mb-3">
-        <Form.Control
-          required
-          autoComplete="no-fill"
-          type="email"
-          name="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <Form.Control.Feedback type="invalid">
-          enter a valid email.
-        </Form.Control.Feedback>
-      </FloatingLabel>
+    <Form noValidate validated={validated}>
+      <Container style={{ position: "relative" }} expand="lg" fluid>
+        <Form.Group
+          as={Col}
+          md="4"
+          controlId="validtionCustomEmail"
+          style={{ width: "100%" }}
+        >
+          <FloatingLabel label="Email" className="mb-3">
+            <Form.Control
+              required
+              autoComplete="no-fill"
+              type="email"
+              name="email"
+              pattern={emailRegEx}
+            />
+            <Form.Control.Feedback type="invalid">
+              enter a valid email.
+            </Form.Control.Feedback>
+          </FloatingLabel>
+        </Form.Group>
 
-      <FloatingLabel label="Password">
-        <Form.Control
-          required
-          autoComplete="no-fill"
-          type="password"
-          name="password"
-          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Form.Control.Feedback type="invalid">
-          check your password
-        </Form.Control.Feedback>
-      </FloatingLabel>
-
-      <Button
-        variant="primary"
-        type="button"
-        style={{ margin: "5% 60%" }}
-        onClick={(e) => onClickLogin(e)}
-      >
-        Submit
-      </Button>
+        <Form.Group
+          as={Col}
+          md="4"
+          controlId="validationCustomPassword"
+          style={{ width: "100%" }}
+        >
+          <FloatingLabel label="Password">
+            <Form.Control
+              required
+              autoComplete="no-fill"
+              type={showOrHide ? "text" : "password"}
+              name="password"
+              min={8}
+            />
+            <Form.Control.Feedback type="invalid">
+              password don't mutch
+            </Form.Control.Feedback>
+          </FloatingLabel>
+        </Form.Group>
+        <Form.Group className="mb-3" style={{ margin: "2%" }} expand="lg">
+          <Form.Check.Input
+            name="showOrHide"
+            type="checkbox"
+            defaultChecked={false}
+            onClick={() =>
+              setShowOrHide((showOrHide) => (showOrHide ? false : true))
+            }
+          />
+          <Form.Check.Label>Show password</Form.Check.Label>
+        </Form.Group>
+        <Button type="button" onClick={handleSubmit}>
+          Submit
+        </Button>
+      </Container>
     </Form>
   );
 };

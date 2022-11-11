@@ -1,142 +1,163 @@
 import React, { useState } from "react";
-import {
-  InputGroup,
-  Form,
-  Button,
-  Container,
-  FloatingLabel,
-} from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
-import { signup } from "../../JS/userReducer";
+import { Form, Button, Container, FloatingLabel, Col } from "react-bootstrap";
 import { emailRegEx } from "../constant/constants";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { signup } from "../../JS/userReducer";
 
-const Register = ({ users }) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+const Register = () => {
+  const userList = useSelector((state) => state.user);
+  // console.log("userList", userList);
+  // console.log(typeof userList);
 
-  // form validation
   const [validated, setValidated] = useState(false);
-  const [newUser, setNewUser] = useState({
-    pic: "/images/user.png",
-    username: "",
-    email: "",
-    password: "",
-  });
+  const [showOrHide, setShowOrHide] = useState(false);
 
-  // function to detect change
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setNewUser((previousValue) => {
-      return {
-        ...previousValue,
-        [name]: value,
-      };
-    });
-    // console.log("change", user);
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const newAccount = {
+    admin: false,
+    auth: false,
+    pic: "/images/user.png",
+    userName: userName,
+    email: email,
+    password: password,
   };
 
-  // register function on click
-  const createAccount = (e) => {
-    const form = e.currentTarget;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const createAccount = (event) => {
+    const form = event.currentTarget;
     if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
+      event.preventDefault();
+      event.stopPropagation();
     }
 
     setValidated(true);
 
-    const findUser = users.filter(
-      (user) =>
-        user.email === newUser.email && user.password === newUser.password
-    );
+    const findUser = userList.find((user) => user.email === email);
+    // console.log(typeof findUser);
 
-    if (findUser.length !== 0) {
-      setValidated(false);
-      alert("this user aleardy exists");
-    }
-    if (validated) {
-      dispatch(signup(newUser));
-      navigate("/signin");
+    if (findUser) {
+      alert("this user already exist, login?");
+      navigate("/signin", { replace: true });
+    } else {
+      dispatch(signup(newAccount));
+      navigate("/signin", { replace: true });
     }
   };
 
   return (
-    <Form autoComplete="no-fill" noValidate validated={validated}>
+    <Form noValidate validated={validated}>
       <Container style={{ position: "relative" }} expand="lg" fluid>
-        <FloatingLabel label="Username" className="mb-3">
-          <Form.Control
-            autoComplete="no-fill"
-            required
-            type="text"
-            name="username"
-            onChange={handleChange}
-          />
-          <Form.Control.Feedback type="invalid">
-            required.
-          </Form.Control.Feedback>
-        </FloatingLabel>
-
-        <FloatingLabel label="Email" className="mb-3">
-          <Form.Control
-            required
-            autoComplete="no-fill"
-            type="email"
-            name="email"
-            pattern={emailRegEx}
-            onChange={handleChange}
-          />
-          <Form.Control.Feedback type="invalid">
-            enter a valid email.
-          </Form.Control.Feedback>
-        </FloatingLabel>
-
-        <FloatingLabel label="Password">
-          <Form.Control
-            required
-            autoComplete="no-fill"
-            type="password"
-            name="password"
-            onChange={handleChange}
-            min={8}
-            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-          />
-          <Form.Control.Feedback type="invalid">
-            <ul>
-              <small>
-                Password length must be between 8 and 12 with at least:
-              </small>
-              <li>
-                <small>1 Number</small>
-              </li>
-              <li>
-                <small>1 upperCase letter</small>
-              </li>
-            </ul>
-          </Form.Control.Feedback>
-        </FloatingLabel>
-        <div
-          className="mb-3"
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginTop: "7%",
-          }}
+        <Form.Group
+          as={Col}
+          md="4"
+          controlId="validationCustomUsername"
+          style={{ width: "100%" }}
         >
-          <Button
-            variant="danger"
-            onClick={() => navigate("/", { replace: true })}
+          <FloatingLabel
+            label="Username"
+            className="mb-3"
+            style={{ color: "gray" }}
           >
-            Cancel
+            <Form.Control
+              type="text"
+              placeholder="Username"
+              aria-describedby="inputGroupPrepend"
+              required
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+            />
+            <Form.Control.Feedback type="invalid">
+              Please choose a username.
+            </Form.Control.Feedback>
+          </FloatingLabel>
+        </Form.Group>
+        <Form.Group
+          as={Col}
+          md="4"
+          controlId="validtionCustomEmail"
+          style={{ width: "100%" }}
+        >
+          <FloatingLabel label="Email" className="mb-3">
+            <Form.Control
+              required
+              autoComplete="no-fill"
+              type="email"
+              name="email"
+              pattern={emailRegEx}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Form.Control.Feedback type="invalid">
+              enter a valid email.
+            </Form.Control.Feedback>
+          </FloatingLabel>
+        </Form.Group>
+
+        <Form.Group
+          as={Col}
+          md="4"
+          controlId="validationCustomPassword"
+          style={{ width: "100%" }}
+        >
+          <FloatingLabel label="Password">
+            <Form.Control
+              required
+              autoComplete="no-fill"
+              type={showOrHide ? "text" : "password"}
+              name="password"
+              min={8}
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Form.Control.Feedback type="invalid">
+              <ul>
+                <small>
+                  Password length must be between 8 and 12 with at least:
+                </small>
+                <li>
+                  <small>1 Number</small>
+                </li>
+                <li>
+                  <small>1 upperCase letter</small>
+                </li>
+              </ul>
+            </Form.Control.Feedback>
+          </FloatingLabel>
+        </Form.Group>
+        <Form.Group className="mb-3" style={{ margin: "2%" }}>
+          <Form.Check.Input
+            name="showOrHide"
+            type="checkbox"
+            defaultChecked={false}
+            onClick={() =>
+              setShowOrHide((showOrHide) => (showOrHide ? false : true))
+            }
+          />
+          <Form.Check.Label>Show password</Form.Check.Label>
+        </Form.Group>
+        <Form.Group className="mb-3 d-flex justify-content-between">
+          <Button
+            type="button"
+            variant="outline-secondary"
+            onClick={() => navigate("/", { repalce: true })}
+          >
+            cancel
           </Button>
           <Button
             type="button"
-            variant="primary"
+            variant="outline-primary"
             onClick={(e) => createAccount(e)}
           >
-            Create
+            Submit
           </Button>
-        </div>
+        </Form.Group>
       </Container>
     </Form>
   );
