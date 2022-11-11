@@ -3,10 +3,9 @@ import Login from "./components/auth/Login";
 import { Routes, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import Register from "./components/auth/Register";
-import Home from "./components/Home";
+import LandingPage from "./components/LandingPage";
 import Authentication from "./components/template/Authentication";
 import Admin from "./components/dashboard/Admin";
-import User from "./components/dashboard/User";
 import { useSelector } from "react-redux";
 
 function App() {
@@ -16,7 +15,7 @@ function App() {
     <div>
       <Navigation />
       <Routes>
-        <Route index path="/" element={<Home />} />
+        <Route index path="/" element={<LandingPage />} />
         <Route
           path="signup"
           element={
@@ -34,7 +33,7 @@ function App() {
           }
         />
         <Route path="dashbord" element={<Admin userList={userList} />} />
-        <Route path="profile" element={<User />} />
+        <Route path="profile" element={<LandingPage />} />
       </Routes>
     </div>
   );
