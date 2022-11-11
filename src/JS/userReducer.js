@@ -5,7 +5,6 @@ const initialState = [
   {
     id: uuidv4(),
     admin: true,
-    auth: false,
     pic: "/images/user.png",
     username: "ali_ali",
     email: "ali_ali@gmail.com",
@@ -14,7 +13,6 @@ const initialState = [
   {
     id: uuidv4(),
     admin: false,
-    auth: false,
     pic: "/images/user.png",
     username: "salah_salah",
     email: "salah_salah@gmail.com",
@@ -22,6 +20,7 @@ const initialState = [
   },
   {
     id: uuidv4(),
+    admin: false,
     pic: "/images/user.png",
     username: "khadija_khadija",
     email: "khadija_khadija@gmail.com",
@@ -30,7 +29,6 @@ const initialState = [
   {
     id: uuidv4(),
     admin: false,
-    auth: false,
     pic: "/images/user.png",
     username: "dhekra_dhekra",
     email: "dhekra_dhekra@gmail.com",
@@ -39,7 +37,6 @@ const initialState = [
   {
     id: uuidv4(),
     admin: false,
-    auth: false,
     pic: "/images/user.png",
     username: "rami_rami",
     email: "rami_rami@gmail.com",
@@ -48,7 +45,6 @@ const initialState = [
   {
     id: uuidv4(),
     admin: false,
-    auth: false,
     pic: "/images/user.png",
     username: "rayen_rayen",
     email: "rayen_rayen@gmail.com",

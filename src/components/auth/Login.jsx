@@ -19,7 +19,7 @@ const Login = () => {
 
   let findUser = {};
 
-  const handleSubmit = (event) => {
+  const handleLogin = (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
@@ -34,8 +34,6 @@ const Login = () => {
       alert("no such user with this email, signup");
       navigate("/signup", { replace: true });
     } else if (findUser.password !== password) {
-      alert("password don't much");
-      setValidated(false);
       setPassword("");
     } else if (validated) {
       dispatch(signin({ email: email, password: password }));
@@ -103,9 +101,9 @@ const Login = () => {
               setShowOrHide((showOrHide) => (showOrHide ? false : true))
             }
           />
-          <Form.Check.Label>Show password</Form.Check.Label>
+          <Form.Check.Label>&nbsp;Show password</Form.Check.Label>
         </Form.Group>
-        <Button type="button" onClick={handleSubmit}>
+        <Button type="button" onClick={handleLogin}>
           Submit
         </Button>
       </Container>
