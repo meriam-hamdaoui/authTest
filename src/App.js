@@ -7,13 +7,16 @@ import Home from "./components/Home";
 import Authentication from "./components/template/Authentication";
 import Admin from "./components/dashboard/Admin";
 import User from "./components/dashboard/User";
+import { useSelector } from "react-redux";
 
 function App() {
+  const userList = useSelector((state) => state.user);
+
   return (
     <div>
       <Navigation />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route index path="/" element={<Home />} />
         <Route
           path="signup"
           element={
@@ -30,7 +33,7 @@ function App() {
             </Authentication>
           }
         />
-        <Route path="dashbord" element={<Admin />} />
+        <Route path="dashbord" element={<Admin userList={userList} />} />
         <Route path="profile" element={<User />} />
       </Routes>
     </div>
