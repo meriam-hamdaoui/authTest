@@ -19,7 +19,6 @@ const Register = () => {
 
   const newAccount = {
     admin: false,
-    auth: false,
     pic: "/images/user.png",
     userName: userName,
     email: email,

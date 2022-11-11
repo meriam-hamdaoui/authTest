@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { VscSignIn, MdOutlineSwitchAccount, FiLogOut } from "react-icons/all";
+import { useLocation } from "react-router-dom";
 
 const linkStyle = {
   color: "white",
@@ -15,6 +16,8 @@ const navBar = {
 };
 
 const Navigation = () => {
+  const location = useLocation().pathname;
+
   return (
     <Navbar bg="primary" expand="lg" style={navBar}>
       <Container fluid style={{ marginLeft: "5%" }}>
@@ -23,14 +26,25 @@ const Navigation = () => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto" style={{ marginLeft: "70%" }}>
-            <Nav.Link href="/signup" style={linkStyle}>
-              Signup <MdOutlineSwitchAccount />
-            </Nav.Link>
-            <Nav.Link href="/signin" style={linkStyle}>
-              Signin <VscSignIn />
-            </Nav.Link>
-          </Nav>
+          {location === "/profile" || location === "/profile" ? (
+            <Nav className="me-auto" style={{ marginLeft: "70%" }}>
+              <Nav.Link href="/signup" style={linkStyle}>
+                profile
+              </Nav.Link>
+              <Nav.Link href="/signin" style={linkStyle}>
+                logout
+              </Nav.Link>
+            </Nav>
+          ) : (
+            <Nav className="me-auto" style={{ marginLeft: "70%" }}>
+              <Nav.Link href="/signup" style={linkStyle}>
+                Signup <MdOutlineSwitchAccount />
+              </Nav.Link>
+              <Nav.Link href="/signin" style={linkStyle}>
+                Signin <VscSignIn />
+              </Nav.Link>
+            </Nav>
+          )}
         </Navbar.Collapse>
       </Container>
     </Navbar>
