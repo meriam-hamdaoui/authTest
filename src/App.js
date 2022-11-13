@@ -15,7 +15,7 @@ function App() {
     <div>
       <Navigation />
       <Routes>
-        <Route index path="/" element={<LandingPage />} />
+        <Route path="/" element={<LandingPage />} />
         <Route
           path="signup"
           element={

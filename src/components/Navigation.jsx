@@ -1,8 +1,7 @@
 import React from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { VscSignIn, MdOutlineSwitchAccount, FiLogOut } from "react-icons/all";
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../JS/userReducer";
 
@@ -26,7 +25,6 @@ const Navigation = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/", { replace: true });
   };
 
   return (
@@ -39,7 +37,11 @@ const Navigation = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           {location === "/profile" || location === "/dashbord" ? (
             <Nav className="me-auto" style={{ marginLeft: "70%" }}>
-              <Nav.Link href="/signin" style={linkStyle} onClick={handleLogout}>
+              <Nav.Link
+                href="/"
+                style={linkStyle}
+                onClick={() => handleLogout()}
+              >
                 logout <FiLogOut />
               </Nav.Link>
             </Nav>
