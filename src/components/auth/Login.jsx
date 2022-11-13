@@ -97,9 +97,7 @@ const Login = () => {
             name="showOrHide"
             type="checkbox"
             defaultChecked={false}
-            onClick={() =>
-              setShowOrHide((showOrHide) => (showOrHide ? false : true))
-            }
+            onClick={() => setShowOrHide(!showOrHide)}
           />
           <Form.Check.Label>&nbsp;Show password</Form.Check.Label>
         </Form.Group>

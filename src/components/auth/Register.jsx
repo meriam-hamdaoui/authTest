@@ -39,12 +39,12 @@ const Register = () => {
 
     const findUser = userList.find((user) => user.email === email);
     // console.log(typeof findUser);
-
-    if (findUser) {
-      alert("this user already exist, login?");
-      navigate("/signin", { replace: true });
-    } else if (validated) {
-      dispatch(signup(newAccount));
+    if (validated) {
+      if (findUser) {
+        alert("this user already exist, login?");
+      } else {
+        dispatch(signup(newAccount));
+      }
       navigate("/signin", { replace: true });
     }
   };
@@ -68,7 +68,6 @@ const Register = () => {
               placeholder="Username"
               aria-describedby="inputGroupPrepend"
               required
-              value={userName}
               onChange={(e) => setUserName(e.target.value)}
             />
             <Form.Control.Feedback type="invalid">
@@ -89,7 +88,6 @@ const Register = () => {
               type="email"
               name="email"
               pattern={emailRegEx}
-              value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <Form.Control.Feedback type="invalid">
@@ -112,7 +110,6 @@ const Register = () => {
               name="password"
               min={8}
               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-              value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <Form.Control.Feedback type="invalid">
@@ -135,11 +132,9 @@ const Register = () => {
             name="showOrHide"
             type="checkbox"
             defaultChecked={false}
-            onClick={() =>
-              setShowOrHide((showOrHide) => (showOrHide ? false : true))
-            }
+            onClick={() => setShowOrHide(!showOrHide)}
           />
-          <Form.Check.Label>Show password</Form.Check.Label>
+          <Form.Check.Label>&nbsp;Show password</Form.Check.Label>
         </Form.Group>
         <Form.Group className="mb-3 d-flex justify-content-between">
           <Button
