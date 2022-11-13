@@ -52,12 +52,7 @@ const Register = () => {
   return (
     <Form noValidate validated={validated}>
       <Container style={{ position: "relative" }} expand="lg" fluid>
-        <Form.Group
-          as={Col}
-          md="4"
-          controlId="validationCustomUsername"
-          style={{ width: "100%" }}
-        >
+        <Form.Group as={Col} md="4" style={{ width: "100%" }}>
           <FloatingLabel
             label="Username"
             className="mb-3"
@@ -66,7 +61,6 @@ const Register = () => {
             <Form.Control
               type="text"
               placeholder="Username"
-              aria-describedby="inputGroupPrepend"
               required
               onChange={(e) => setUserName(e.target.value)}
             />
@@ -75,12 +69,7 @@ const Register = () => {
             </Form.Control.Feedback>
           </FloatingLabel>
         </Form.Group>
-        <Form.Group
-          as={Col}
-          md="4"
-          controlId="validtionCustomEmail"
-          style={{ width: "100%" }}
-        >
+        <Form.Group as={Col} md="4" style={{ width: "100%" }}>
           <FloatingLabel label="Email" className="mb-3">
             <Form.Control
               required
@@ -96,12 +85,7 @@ const Register = () => {
           </FloatingLabel>
         </Form.Group>
 
-        <Form.Group
-          as={Col}
-          md="4"
-          controlId="validationCustomPassword"
-          style={{ width: "100%" }}
-        >
+        <Form.Group as={Col} md="4" style={{ width: "100%" }}>
           <FloatingLabel label="Password">
             <Form.Control
               required
