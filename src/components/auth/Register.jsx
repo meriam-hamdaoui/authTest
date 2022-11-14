@@ -62,13 +62,15 @@ const Register = () => {
               type="text"
               placeholder="Username"
               required
+              min={4}
               onChange={(e) => setUserName(e.target.value)}
             />
             <Form.Control.Feedback type="invalid">
-              Please choose a username.
+              Please choose a username with 4 letters at least.
             </Form.Control.Feedback>
           </FloatingLabel>
         </Form.Group>
+
         <Form.Group as={Col} md="4" style={{ width: "100%" }}>
           <FloatingLabel label="Email" className="mb-3">
             <Form.Control
@@ -111,6 +113,7 @@ const Register = () => {
             </Form.Control.Feedback>
           </FloatingLabel>
         </Form.Group>
+
         <Form.Group className="mb-3" style={{ margin: "2%" }}>
           <Form.Check.Input
             name="showOrHide"
@@ -120,6 +123,7 @@ const Register = () => {
           />
           <Form.Check.Label>&nbsp;Show password</Form.Check.Label>
         </Form.Group>
+
         <Form.Group className="mb-3 d-flex justify-content-between">
           <Button
             type="button"
