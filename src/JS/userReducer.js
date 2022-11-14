@@ -58,18 +58,15 @@ const userSlice = createSlice({
   reducers: {
     signin: (state, action) => action.payload,
     signup: (state, action) => {
-      const newUser = {
-        id: uuidv4(),
-        ...action.payload,
-      };
-      return [...state, newUser];
+      // const newUser = {
+      //   id: uuidv4(),
+      //   ...action.payload,
+      // };
+      return [...state, action.payload];
     },
-    logout: (state, action) => {
-      return action.payload;
-    },
-    deleteUser: (state, action) => {
-      return state.filter((item) => item.id !== action.payload);
-    },
+    logout: (state, action) => action.payload,
+    deleteUser: (state, action) =>
+      state.filter((item) => item.id !== action.payload),
   },
 });
 

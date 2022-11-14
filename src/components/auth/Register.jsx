@@ -43,7 +43,15 @@ const Register = () => {
       if (findUser) {
         alert("this user already exist, login?");
       } else {
-        dispatch(signup(newAccount));
+        dispatch(
+          signup({
+            admin: false,
+            pic: "/images/user.png",
+            userName: userName,
+            email: email,
+            password: password,
+          })
+        );
       }
       navigate("/signin", { replace: true });
     }
@@ -63,6 +71,7 @@ const Register = () => {
               placeholder="Username"
               required
               min={4}
+              value={userName}
               onChange={(e) => setUserName(e.target.value)}
             />
             <Form.Control.Feedback type="invalid">
@@ -79,6 +88,7 @@ const Register = () => {
               type="email"
               name="email"
               pattern={emailRegEx}
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <Form.Control.Feedback type="invalid">
@@ -96,6 +106,7 @@ const Register = () => {
               name="password"
               min={8}
               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <Form.Control.Feedback type="invalid">
@@ -128,7 +139,7 @@ const Register = () => {
           <Button
             type="button"
             variant="outline-secondary"
-            onClick={() => navigate("/", { repalce: true })}
+            onClick={() => navigate("/", { replace: true })}
           >
             cancel
           </Button>
